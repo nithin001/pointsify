@@ -1,0 +1,15 @@
+<nav class="bg-grey-light rounded font-sans w-full" aria-label="breadcrumb">
+  <ol class="list-reset flex text-grey-dark">
+    <li class=""><%= link_to 'Home', root_path, class: "text-blue font-bold" %></li>
+    <li><span class="mx-2">/</span></li>
+    <li aria-current="page">New Organization</li>
+  </ol>
+</nav>
+<div class="bg-white rounded shadow-7 mw-100 p-6">
+  <div class="w-full max-w-md mx-auto my-2">
+    <div class="bg-white border border-gray-300 rounded-lg px-8 pt-6 pb-8">
+      <h1 class="pt-4 mb-8 text-4xl font-bold heading">New Organization</h1>
+      <%= render 'form', organization: @organization %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<%= form_with(model: organization, local: true, url: organization.new_record? ? organizations_path : organization_path) do |form| %>
+  <% if organization.errors.any? %>
+    <div class="bg-red-100 border-l-4 border-red-500 mb-4 p-4 text-red-700" role="alert">
+      <p class="font-bold">Oops!</p>
+      <p><%= pluralize(organization.errors.count, "error") %> prohibited this organization from being saved:</p>
+      <% organization.errors.full_messages.each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="input-group">
+    <%= form.label :name, "Organization Name" %>
+    <%= form.text_field :name, class: 'input', placeholder: 'Organization name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.submit class: 'btn btn-default' %>
+  </div>
+<% end %>

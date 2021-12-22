@@ -1,0 +1,86 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<nav class="bg-gray-800">
+  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+    <div class="relative flex items-center justify-between h-16">
+      <div id="mobile-menu-button" class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+        <!-- Mobile menu button-->
+        <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+        <div class="flex-shrink-0 flex items-center">
+          <%= link_to "Pointsify", root_path, class: "w-auto text-blue-300 text-3xl font-bold text-teal" %>
+        </div>
+        <div class="hidden sm:block sm:ml-6">
+          <div class="flex space-x-4">
+            <% [].each do |page|
+            %>
+              <% if current_page?(page[:path]) %>
+                <%= link_to page[:label], page[:path], class: "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" %>
+              <% else %>
+                <%= link_to page[:label], page[:path], class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+              <% end %>
+            <% end %>
+
+            <% if current_user&.preferred_organization %>
+              <% if current_ability.can?(:manage, current_user.preferred_organization) %>
+                <%= link_to "Manage Organization", edit_organization_path(current_user.preferred_organization), class: 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 hidden sm:block">
+        <div class="ml-3 relative">
+          <div>
+            <button type="button" class="bg-gray-800 flex text-sm rounded-full" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+              <span class="sr-only">Open user menu</span>
+              <i class="text-white text-2xl fas fa-user-cog"></i>
+            </button>
+          </div>
+
+          <!--
+            Dropdown menu, show/hide based on menu state.
+
+            Entering: "transition ease-out duration-100"
+              From: "transform opacity-0 scale-95"
+              To: "transform opacity-100 scale-100"
+            Leaving: "transition ease-in duration-75"
+              From: "transform opacity-100 scale-100"
+              To: "transform opacity-0 scale-95"
+          -->
+          <div id="user-menu" class="hidden origin-top-right absolute right-0 mt-5 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+            <!-- Active: "bg-gray-100", Not Active: "" -->
+            <%= link_to "Create Organization", new_organization_path, class: 'block px-4 py-2 text-sm text-gray-700' %>
+            <%= react_component("change_organization", organizations: current_user.owned_organizations, preferred_organization: current_user.preferred_organization, class_name: 'block px-4 py-2 text-sm text-gray-700') %>
+            <%= link_to "Your Profile", edit_user_registration_path, class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-0" %>
+            <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-0" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu, show/hide based on menu state. -->
+  <div class="hidden" id="mobile-menu">
+    <% if current_user&.preferred_organization %>
+      <% if current_ability.can?(:manage, current_user.preferred_organization) %>
+        <%= link_to "Manage Organization", edit_organization_path(current_user.preferred_organization), class: 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block' %>
+      <% end %>
+    <% end %>
+
+    <!-- Active: "bg-gray-100", Not Active: "" -->
+    <%= link_to "Create Organization", new_organization_path, class: 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block' %>
+    <%= react_component("change_organization", organizations: current_user.owned_organizations, preferred_organization: current_user.preferred_organization, class_name: 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block') %>
+    <%= link_to "Your Profile", edit_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block", role: "menuitem", tabindex: "-1", id: "user-menu-item-0" %>
+    <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block", role: "menuitem", tabindex: "-1", id: "user-menu-item-0" %>
+    <br />
+  </div>
+</nav>
