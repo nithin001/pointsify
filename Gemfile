@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.3'
 
+gem 'acts_as_tenant'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.3'
 # Use postgresql as the database for Active Record
@@ -57,4 +58,3 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise', '~> 4.7', '>= 4.7.3'
 gem 'friendly_id', '~> 5.4', '>= 5.4.1'
 gem 'sidekiq', '~> 6.1', '>= 6.1.2'
-gem 'name_of_person', '~> 1.1', '>= 1.1.1'
