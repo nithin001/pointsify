@@ -5993,6 +5993,11 @@ react-modal@^3.14.4:
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
 
+react-simple-keyboard@^3.4.17:
+  version "3.4.17"
+  resolved "https://registry.yarnpkg.com/react-simple-keyboard/-/react-simple-keyboard-3.4.17.tgz#00488669444b1f4311ae2b6787fa46faa033e43b"
+  integrity sha512-M5+iJ9AmYESZ/4AlpkIFjHVmh/nNDqlQ/0AL4SdsEngJ3LLKeufmHRrQBD5w32FuyCNCJwvsxdz/yOiDRdue4Q==
+
 react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
@@ -6494,6 +6499,11 @@ signal-exit@^3.0.0:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.6.tgz#24e630c4b0f03fea446a2bd299e62b4a6ca8d0af"
   integrity sha512-sDl4qMFpijcGw22U5w63KmD3cZJfBuFlVNbVMKje2keoKML7X2UzWbc4XrmEbDwg0NXJc3yv4/ox7b+JWb57kQ==
+
+simple-keyboard@^3.4.15:
+  version "3.4.15"
+  resolved "https://registry.yarnpkg.com/simple-keyboard/-/simple-keyboard-3.4.15.tgz#8560ae2b6bf3376d4e30a1635a118cbd8c4c9283"
+  integrity sha512-uuEnZ7MZIIQdlJZkqwwDOpj/q1ZBL00f9589k72K4EM/GCydRVuWjDCA8N+D7KrcY8iOqTqt0hMLsVizhLfnfA==
 
 simple-swizzle@^0.2.2:
   version "0.2.2"
