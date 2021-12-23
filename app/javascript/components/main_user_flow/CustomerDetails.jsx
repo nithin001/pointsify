@@ -6,7 +6,7 @@ function CustomerDetails({screen, setScreen}) {
     }
 
     return (
-        <div className="font-display">
+        <div className="font-sans">
         <div className="flex">
             <div className="w-1/2">
                 <div

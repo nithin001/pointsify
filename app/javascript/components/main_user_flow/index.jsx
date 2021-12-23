@@ -9,8 +9,8 @@ import RedeemPoints from "./RedeemPoints";
 import NavBar from "./NavBar";
 
 function Index(props) {
-    const [screen, setScreen] = useState('getNumber')
-    const [number, setNumber] = useState('-');
+    const [screen, setScreen] = useState('customerDetails')
+    const [number, setNumber] = useState('9865330003');
 
     const selectNumber=(number)=>{
         setNumber(number);

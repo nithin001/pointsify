@@ -27,7 +27,7 @@ function AddBillAmount({ screen, setScreen }) {
     }) : '';
 
     return (
-        <div className="mt-2 font-display">
+        <div className="mt-2 font-sans">
             <Keyboard keyboardRef={r => (keyboardRef.current = r)}
                       layout={{
                           default: ["1 2 3", "4 5 6", "7 8 9", "0 {bksp} clear"],

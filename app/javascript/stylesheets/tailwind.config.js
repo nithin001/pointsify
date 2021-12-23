@@ -10,10 +10,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'display': ['Bebas Neue']
+        'sans': ['Open Sans']
       }
     },
   },
+  important: '#app',
   variants: {},
   plugins: [],
 }
