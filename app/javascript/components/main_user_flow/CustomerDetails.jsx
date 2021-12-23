@@ -4,7 +4,7 @@ import useApi from "../common/useApi";
 import Transactions from "./Transactions";
 import moment from "moment";
 
-function CustomerDetails({screen, setScreen, number}) {
+function CustomerDetails({screen, setScreen, number, setMaxPoints}) {
     const billsApi = useCallback(()=>{
         if(screen==='customerDetails') {
             return AxiosInstance().get(`/bills.json?number=${number}`)
@@ -57,7 +57,9 @@ function CustomerDetails({screen, setScreen, number}) {
             <div className="w-full flex mt-2 p-1">
                 <button onClick={()=>{setScreen('addBillAmount')}} className="border rounded w-1/2 p-2 mr-1 bg-transparent text-white text-center shadow text-2xl">
                     Add Bill Amount</button>
-                <button onClick={()=>{setScreen('redeemPoints')}} className="border rounded w-1/2 p-2 ml-1 bg-transparent text-white text-center shadow text-2xl">
+                <button onClick={()=>{
+                    setMaxPoints(availablePoints);
+                    setScreen('redeemPoints')}} className="border rounded w-1/2 p-2 ml-1 bg-transparent text-white text-center shadow text-2xl">
                     Redeem Points</button>
             </div>
         <div className="flex mt-2">

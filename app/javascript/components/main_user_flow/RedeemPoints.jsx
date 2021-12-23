@@ -3,7 +3,7 @@ import Keyboard from 'react-simple-keyboard';
 
 import 'react-simple-keyboard/build/css/index.css';
 
-function RedeemPoints({ screen, setScreen, setRedeemPoints }) {
+function RedeemPoints({ screen, setScreen, maxPoints, setRedeemPoints }) {
     if(screen!== 'redeemPoints') {
         return null;
     }
@@ -18,6 +18,9 @@ function RedeemPoints({ screen, setScreen, setRedeemPoints }) {
             if(input.indexOf('clear')>=0) {
                 keyboardRef.current.clearInput();
                 setPoints('');
+            } else if(input.indexOf('all')>=0) {
+                setPoints(maxPoints);
+                keyboardRef.current.clearInput();
             } else {
                 setPoints(input);
             }
@@ -42,7 +45,7 @@ function RedeemPoints({ screen, setScreen, setRedeemPoints }) {
 
             <Keyboard keyboardRef={r => (keyboardRef.current = r)}
                       layout={{
-                          default: ["1 2 3", "4 5 6", "7 8 9", "0 {bksp} clear"],
+                          default: ["1 2 3", "4 5 6", "7 8 9", "0 {bksp} clear", "all"],
                       }}
                       theme={"hg-theme-default hg-layout-numeric numeric-theme mt-2 bg-transparent"}
                       onChange={onChange}

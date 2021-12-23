@@ -15,6 +15,7 @@ function Index(props) {
     const [number, setNumber] = useState('');
     const [billAmount, setBillAmount] = useState('');
     const [redeemPoints, setRedeemPoints] = useState('');
+    const [maxPoints, setMaxPoints] = useState(0)
 
     const selectNumber=(number)=>{
         setNumber(number);
@@ -22,6 +23,7 @@ function Index(props) {
     }
 
     const reset=()=>{
+        setMaxPoints(0)
         setNumber('');
         setBillAmount('');
         setRedeemPoints('');
@@ -31,10 +33,10 @@ function Index(props) {
     return (<div>
         <InputScreen screen={screen} selectNumber={selectNumber} defaultNumber={number} />
         <NavBar screen={screen} number={number} reset={reset} />
-        <CustomerDetails screen={screen} number={number} setScreen={setScreen}/>
+        <CustomerDetails screen={screen} number={number} setScreen={setScreen} setMaxPoints={setMaxPoints}/>
         <AddBillAmount screen={screen} setScreen={setScreen} setBillAmount={setBillAmount}/>
-        <BillConfirmation number={number} screen={screen} setScreen={setScreen} billAmount={billAmount}/>
-        <RedeemPoints screen={screen} setScreen={setScreen} setRedeemPoints={setRedeemPoints} />
+        <BillConfirmation number={number} screen={screen} setScreen={setScreen} billAmount={billAmount} />
+        <RedeemPoints maxPoints={maxPoints} screen={screen} setScreen={setScreen} setRedeemPoints={setRedeemPoints} />
         <RedemptionConfirmation number={number} screen={screen} setScreen={setScreen} redeemPoints={redeemPoints}/>
     </div>)
 
