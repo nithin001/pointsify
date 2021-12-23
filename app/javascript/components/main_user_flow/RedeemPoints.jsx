@@ -7,6 +7,7 @@ function RedeemPoints({ screen, setScreen, maxPoints, setRedeemPoints }) {
     if(screen!== 'redeemPoints') {
         return null;
     }
+
     const keyboardRef = useRef(null);
     const [points, setPoints] = useState('')
 

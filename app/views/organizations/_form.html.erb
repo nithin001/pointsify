@@ -10,11 +10,12 @@
   <% end %>
 
   <div class="input-group">
-    <%= form.label :name, "Organization Name" %>
+    <%= form.label :name, "Org Name" %>
     <%= form.text_field :name, class: 'input', placeholder: 'Organization name' %>
   </div>
 
   <div class="input-group">
     <%= form.submit class: 'btn btn-default' %>
+    <%= link_to 'Cancel', organizations_path, class: 'btn btn-default' %>
   </div>
 <% end %>

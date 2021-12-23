@@ -1,5 +1,12 @@
 class OrganizationsController < ApplicationController
   load_and_authorize_resource
+  # GET /redemptions or /redemptions.json
+  def index
+  end
+
+  # GET /redemptions/1 or /redemptions/1.json
+  def show
+  end
 
   # GET /organizations/new
   def new; end
@@ -10,7 +17,7 @@ class OrganizationsController < ApplicationController
   def set_as_preferred
     respond_to do |format|
       current_user.set_preferred_organization(@organization)
-      format.html { redirect_to root_path, notice: "#{@organization.name} set as default organization." }
+      format.html { redirect_to organizations_path, notice: "#{@organization.name} set as default organization." }
       format.json { head :no_content }
     end
   end
@@ -21,7 +28,7 @@ class OrganizationsController < ApplicationController
     respond_to do |format|
       if @organization.save
         set_current_tenant(@organization)
-        format.html { redirect_to root_path, notice: 'Organization was successfully created.' }
+        format.html { redirect_to organizations_path, notice: 'Organization was successfully created.' }
         format.json { render :show, status: :created, location: root_path }
       else
         format.html { render :new }
@@ -35,7 +42,7 @@ class OrganizationsController < ApplicationController
   def update
     respond_to do |format|
       if @organization.update(organization_params)
-        format.html { redirect_to root_path, notice: 'Organization was successfully updated.' }
+        format.html { redirect_to organizations_path, notice: 'Organization was successfully updated.' }
         format.json { render :show, status: :ok, location: root_path }
       else
         format.html { render :edit }

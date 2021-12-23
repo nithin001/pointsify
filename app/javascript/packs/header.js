@@ -1,6 +1,8 @@
 /* eslint-env browser */
 
 function headerLoad() {
+  $(".notice").delay(5000).fadeOut(0);
+
   const userMenu = $('#user-menu');
   const mobileMenu = $('#mobile-menu');
   userMenu.addClass('hidden');

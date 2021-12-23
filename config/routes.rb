@@ -10,8 +10,9 @@ Rails.application.routes.draw do
   devise_for :users
 
   root to: 'home#index'
+  get '/kiosk', to: 'kiosk#index', as: 'kiosk'
 
-  resources :organizations, except: %i[index show] do
+  resources :organizations do
     member do
       get :set_as_preferred
     end
