@@ -37,9 +37,8 @@ function InputScreen({ screen, selectNumber, defaultNumber }) {
                     type="number"
                     value={number}
                     onChange={event => onChange(event.target.value, null,true)}
-                    autoFocus
                 />
-                <button onClick={()=>{selectNumber(number)}} className="w-1/4 ml-2 text-2xl border rounded mt-2 p-2 bg-transparent text-white text-center shadow">GO</button>
+                <button onClick={()=>{selectNumber(number)}} className="w-1/4 ml-2 mt-2 text-2xl border rounded p-2 bg-transparent text-white text-center shadow">GO</button>
 
             </div>
                         <Keyboard keyboardRef={r => (keyboardRef.current = r)}
@@ -49,11 +48,7 @@ function InputScreen({ screen, selectNumber, defaultNumber }) {
                       theme={"hg-theme-default hg-layout-numeric numeric-theme mt-2 bg-transparent"}
                       onChange={onChange}
                       preventMouseDownDefault
-                //           buttonTheme={[
-                // {
-                //     class: "font-sans",
-                //     buttons: "1 2 3 4 5 6 7 8 9 0 {bksp} clear"
-                // }]}
+
             />
         </div>
     );

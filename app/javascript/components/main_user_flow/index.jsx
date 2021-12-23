@@ -7,10 +7,14 @@ import CustomerDetails from "./CustomerDetails";
 import AddBillAmount from "./AddBillAmount";
 import RedeemPoints from "./RedeemPoints";
 import NavBar from "./NavBar";
+import BillConfirmation from "./BillConfirmation";
+import RedemptionConfirmation from "./RedemptionConfirmation";
 
 function Index(props) {
-    const [screen, setScreen] = useState('customerDetails')
-    const [number, setNumber] = useState('9865330003');
+    const [screen, setScreen] = useState('getNumber')
+    const [number, setNumber] = useState('');
+    const [billAmount, setBillAmount] = useState('');
+    const [redeemPoints, setRedeemPoints] = useState('');
 
     const selectNumber=(number)=>{
         setNumber(number);
@@ -18,7 +22,9 @@ function Index(props) {
     }
 
     const reset=()=>{
-        setNumber('-');
+        setNumber('');
+        setBillAmount('');
+        setRedeemPoints('');
         setScreen('getNumber')
     }
 
@@ -26,8 +32,10 @@ function Index(props) {
         <InputScreen screen={screen} selectNumber={selectNumber} defaultNumber={number} />
         <NavBar screen={screen} number={number} reset={reset} />
         <CustomerDetails screen={screen} number={number} setScreen={setScreen}/>
-        <AddBillAmount screen={screen} setScreen={setScreen} />
-        <RedeemPoints screen={screen} setScreen={setScreen} maxPoints={100} />
+        <AddBillAmount screen={screen} setScreen={setScreen} setBillAmount={setBillAmount}/>
+        <BillConfirmation number={number} screen={screen} setScreen={setScreen} billAmount={billAmount}/>
+        <RedeemPoints screen={screen} setScreen={setScreen} setRedeemPoints={setRedeemPoints} />
+        <RedemptionConfirmation number={number} screen={screen} setScreen={setScreen} redeemPoints={redeemPoints}/>
     </div>)
 
 }

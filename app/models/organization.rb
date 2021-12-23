@@ -4,6 +4,8 @@ class Organization < ApplicationRecord
   validates_presence_of :name
   validates :name, format: { with: /\A[a-zA-Z\s\d]+\z/, message: "only allows letters, numbers and spaces" }, allow_blank: true
   validates :name, length: { in: 6..20 }, allow_blank: true
+  has_many :bills
+  has_many :redemptions
 
   def set_preferred_organization
     ActsAsTenant.without_tenant do

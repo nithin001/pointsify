@@ -7,7 +7,7 @@ function NavBar({screen, number, reset}) {
 
 
     return (
-        <div className="mt-2 w-full flex justify-between items-center p-1">
+        <div className="mt-4 w-full flex justify-between items-center p-1">
             <input
                 className="w-3/4 text-2xl border rounded mr-2 p-2 bg-white"
                 type="number"
@@ -15,7 +15,7 @@ function NavBar({screen, number, reset}) {
                 autoFocus
                 disabled
             />
-            <button onClick={reset} className="bg-transparent border border-gray-100 text-white p-2 text-2xl rounded">RESET</button>
+            <button onClick={reset} className="border rounded p-2 ml-2 bg-transparent text-white text-center shadow text-2xl">RESET</button>
         </div>
     );
 }

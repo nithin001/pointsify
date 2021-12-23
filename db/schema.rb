@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_22_070056) do
+ActiveRecord::Schema.define(version: 2021_12_23_075144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bills", force: :cascade do |t|
+    t.integer "amount"
+    t.string "phone_number"
+    t.bigint "organization_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_bills_on_organization_id"
+  end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
@@ -29,6 +38,15 @@ ActiveRecord::Schema.define(version: 2021_12_22_070056) do
   create_table "organizations", force: :cascade do |t|
     t.string "name"
     t.integer "owner_id"
+  end
+
+  create_table "redemptions", force: :cascade do |t|
+    t.integer "points"
+    t.string "phone_number"
+    t.bigint "organization_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_redemptions_on_organization_id"
   end
 
   create_table "users", force: :cascade do |t|
