@@ -9,6 +9,7 @@ class Ability
     can :manage, Organization, owner_id: user.id
     can :manage, Bill, organization: { owner_id: user.id }
     can :manage, Redemption, organization: { owner_id: user.id }
+    can :manage, Reward, organization: { owner_id: user.id }
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

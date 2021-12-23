@@ -6,6 +6,7 @@ class Organization < ApplicationRecord
   validates :name, length: { in: 6..20 }, allow_blank: true
   has_many :bills
   has_many :redemptions
+  has_many :rewards
 
   def set_preferred_organization
     ActsAsTenant.without_tenant do

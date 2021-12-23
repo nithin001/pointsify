@@ -6,7 +6,6 @@ import moment from "moment";
 
 function CustomerDetails({screen, setScreen, number}) {
     const billsApi = useCallback(()=>{
-        console.log(screen);
         if(screen==='customerDetails') {
             return AxiosInstance().get(`/bills.json?number=${number}`)
         }
@@ -14,35 +13,44 @@ function CustomerDetails({screen, setScreen, number}) {
     },[screen, number]);
 
     const redemptionsApi = useCallback(()=>{
-        console.log(screen);
         if(screen==='customerDetails') {
             return AxiosInstance().get(`/redemptions.json?number=${number}`)
         }
         return Promise.resolve({data: []})
     },[screen, number]);
 
+    const rewardsApi = useCallback(()=>{
+        if(screen==='customerDetails') {
+            return AxiosInstance().get(`/rewards.json?number=${number}`)
+        }
+        return Promise.resolve({data: []})
+    },[screen, number]);
+
     const [billsLoaded, billsError, bills] = useApi(billsApi);
     const [redemptionsLoaded, redemptionsError, redemptions] = useApi(redemptionsApi);
+    const [rewardsLoaded, rewardsError, rewards] = useApi(rewardsApi);
+
 
     if(screen!== 'customerDetails') {
         return null;
     }
 
-    if(!billsLoaded || !redemptionsLoaded) {
+    if(!billsLoaded || !redemptionsLoaded || !rewardsLoaded) {
         return null;
     }
 
-    const totalBill = bills.reduce((previous, current) => {
-        return previous + current.amount;
+    const totalRewards = rewards.reduce((previous, current) => {
+        return previous + current.points;
     },0)
 
     const totalRedemptions = redemptions.reduce((previous, current) => {
         return previous + current.points;
     },0)
-    const rows = redemptions.concat(bills)
+
+    const rows = redemptions.concat(bills).concat(rewards)
     rows.sort((a,b)=>moment.utc(b.created_at).diff(moment.utc(a.created_at)));
 
-    const availablePoints = Math.round(totalBill/100) - totalRedemptions;
+    const availablePoints = totalRewards - totalRedemptions;
 
     return (
         <div className="font-sans">
@@ -77,7 +85,6 @@ function CustomerDetails({screen, setScreen, number}) {
             </div>
         </div>
             <Transactions rows={rows}/>
-
         </div>
     );
 }

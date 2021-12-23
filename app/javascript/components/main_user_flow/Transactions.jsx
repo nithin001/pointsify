@@ -7,8 +7,32 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+const getText = ({type}) => {
+    if(type==='Bill') {
+        return 'Bill added on '
+    } else if(type === 'Reward') {
+        return 'Points added on ';
+    } else {
+        return 'Points redeemed on ';
+    }
+}
+const getData = (row) => {
+    const { type} = row;
+    if(type==='Bill') {
+        return  <span className="text-right text-green-600">+{row.amount}</span>
+    } else if(type === 'Reward') {
+        return <span className="text-right text-green-600">+{row.points}</span>
+    } else {
+        return <span className="text-right text-red-600">-{row.points}</span>
+    }
+}
 
 export default function Transactions({rows}) {
+    if(rows.length ===0){
+        return null;
+    }
+
+
     return (
         <div
         className="mt-2 p-1">
@@ -16,7 +40,7 @@ export default function Transactions({rows}) {
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Transaction</TableCell>
+                            <TableCell>Transactions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -27,12 +51,10 @@ export default function Transactions({rows}) {
                             >
                                 <TableCell component="th" scope="row" className="flex justify-between">
                                 <span>
-                                    {row.type === 'Bill' ? `Bill added on ` : `Points redeemed on `}
+                                    {getText(row)}
                                     {moment(row.created_at).format('DD-MM-YYYY')}
                                 </span>
-                                {row.type === 'Bill' ? <span className="text-right text-green-600">+{row.amount}</span> :
-                                    <span className="text-right text-red-600">-{row.points}</span>}
-
+                                    {getData(row)}
                                 </TableCell>
                             </TableRow>
                         ))}
