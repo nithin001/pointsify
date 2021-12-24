@@ -5,6 +5,6 @@ class Bill < ApplicationRecord
   after_create :add_points
 
   def add_points
-    Reward.create!(points: amount/100, phone_number: phone_number, organization: organization)
+    Reward.create!(points: ((amount*organization.discount_percentage)/100), phone_number: phone_number, organization: organization)
   end
 end

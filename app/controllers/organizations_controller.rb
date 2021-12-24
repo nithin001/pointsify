@@ -65,6 +65,6 @@ class OrganizationsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def organization_params
-    params.fetch(:organization).permit(:name).merge(owner: current_user)
+    params.fetch(:organization).permit(:name, :discount_percentage).merge(owner: current_user)
   end
 end
