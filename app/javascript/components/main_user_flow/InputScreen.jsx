@@ -48,6 +48,10 @@ function InputScreen({ screen, selectNumber, defaultNumber }) {
                       theme={"hg-theme-default hg-layout-numeric numeric-theme mt-2 bg-transparent"}
                       onChange={onChange}
                       preventMouseDownDefault
+                                  autoUseTouchEvents
+                                  disableButtonHold
+                                  disableCaretPositioning
+                                  useButtonTag={false}
 
             />
         </div>
