@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
   get '/kiosk', to: 'kiosk#index', as: 'kiosk'
+  get '/menu', to: 'menu#index', as: 'menu'
 
   resources :organizations do
     member do

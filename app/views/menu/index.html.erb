@@ -1,0 +1,11 @@
+<div class="flex flex-wrap mt-8 justify-between items-center">
+  <div class="w-1/2 p-2 flex">
+    <%= link_to "Kiosk", root_path, class: 'border w-full rounded p-8 bg-transparent text-white text-center shadow text-2xl' %>
+  </div>
+  <div class="w-1/2 p-2 flex">
+    <%= link_to "Orgs", organizations_path, class: 'border w-full rounded p-8 bg-transparent text-white text-center shadow text-2xl' %>
+  </div>
+  <div class="w-1/2 p-2 flex">
+    <%= link_to "Logout", destroy_user_session_path, method: :delete, class:"border w-full rounded p-8 bg-transparent text-white text-center shadow text-2xl" %>
+  </div>
+</div>
