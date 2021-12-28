@@ -4,12 +4,12 @@
   <%#= render 'logged_out_menu' %>
 <%# end %>
 <div class="flex justify-between items-center">
-  <%= link_to root_path, class: "w-2/4 flex text-blue-300 text-3xl font-bold text-teal ml-6" do %>
+  <%= link_to kiosk_root_path, class: "w-2/4 flex text-blue-300 text-3xl font-bold text-teal ml-6" do %>
     <%= image_tag('logo.png', :alt => 'logo') %>
   <% end %>
   <% if user_signed_in? %>
     <% if current_page?(menu_path) %>
-      <%= link_to root_path, class: "text-3xl font-bold text-white mr-6" do %>
+      <%= link_to kiosk_root_path, class: "text-3xl font-bold text-white mr-6" do %>
         <i class="fas fa-times"></i>
       <% end %>
     <% else %>

@@ -1,4 +1,4 @@
-class OrganizationsController < ApplicationController
+class OrganizationsController < KioskApplicationController
   load_and_authorize_resource
   # GET /redemptions or /redemptions.json
   def index
@@ -29,7 +29,7 @@ class OrganizationsController < ApplicationController
       if @organization.save
         set_current_tenant(@organization)
         format.html { redirect_to organizations_path, notice: 'Organization was successfully created.' }
-        format.json { render :show, status: :created, location: root_path }
+        format.json { render :show, status: :created, location: kiosk_root_path }
       else
         format.html { render :new }
         format.json { render json: @organization.errors, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class OrganizationsController < ApplicationController
     respond_to do |format|
       if @organization.update(organization_params)
         format.html { redirect_to organizations_path, notice: 'Organization was successfully updated.' }
-        format.json { render :show, status: :ok, location: root_path }
+        format.json { render :show, status: :ok, location: kiosk_root_path }
       else
         format.html { render :edit }
         format.json { render json: @organization.errors, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class OrganizationsController < ApplicationController
   def destroy
     @organization.destroy
     respond_to do |format|
-      format.html { redirect_to root_path, notice: 'Organization was successfully destroyed.' }
+      format.html { redirect_to kiosk_root_path, notice: 'Organization was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

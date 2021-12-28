@@ -1,4 +1,4 @@
-class RedemptionsController < ApplicationController
+class RedemptionsController < KioskApplicationController
   load_and_authorize_resource
 
   # GET /redemptions or /redemptions.json

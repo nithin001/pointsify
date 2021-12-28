@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::Base
+class KioskApplicationController < ActionController::Base
   set_current_tenant_through_filter
 
   before_action :authenticate_user!

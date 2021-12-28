@@ -1,4 +1,4 @@
-class RewardsController < ApplicationController
+class RewardsController < KioskApplicationController
   load_and_authorize_resource
 
   # GET /rewards or /rewards.json

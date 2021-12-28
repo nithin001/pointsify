@@ -1,4 +1,4 @@
-class BillsController < ApplicationController
+class BillsController < KioskApplicationController
   load_and_authorize_resource
 
   # GET /bills or /bills.json
