@@ -7,8 +7,7 @@ Rails.application.routes.draw do
 
   constraints subdomain: 'kiosk' do
     devise_for :users
-    root to: 'home#index', as: 'kiosk_root'
-    get '/kiosk', to: 'kiosk#index', as: 'kiosk'
+    root to: 'kiosk#index', as: 'kiosk_root'
     get '/menu', to: 'menu#index', as: 'menu'
 
     resources :organizations do
@@ -24,6 +23,8 @@ Rails.application.routes.draw do
   constraints subdomain: 'customer' do
     root to: 'customer#index', as: 'customer_root'
   end
+
+  root to: 'home#index', as: 'marketing_root'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
