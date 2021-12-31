@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_24_061916) do
+ActiveRecord::Schema.define(version: 2021_12_31_055318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 2021_12_24_061916) do
     t.index ["organization_id"], name: "index_bills_on_organization_id"
   end
 
+  create_table "customers", force: :cascade do |t|
+    t.string "phone", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.datetime "remember_created_at"
+    t.boolean "guest", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["phone"], name: "index_customers_on_phone", unique: true
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -35,10 +45,20 @@ ActiveRecord::Schema.define(version: 2021_12_24_061916) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "known_organizations", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "organization_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_known_organizations_on_organization_id"
+    t.index ["user_id"], name: "index_known_organizations_on_user_id"
+  end
+
   create_table "organizations", force: :cascade do |t|
     t.string "name"
     t.integer "owner_id"
     t.float "discount_percentage", default: 1.0
+    t.string "unique_id"
   end
 
   create_table "redemptions", force: :cascade do |t|
@@ -71,6 +91,7 @@ ActiveRecord::Schema.define(version: 2021_12_24_061916) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "timezone"
     t.integer "preferred_organization_id"
+    t.boolean "guest", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -7,6 +7,13 @@ class Organization < ApplicationRecord
   has_many :bills
   has_many :redemptions
   has_many :rewards
+  before_save :set_unique_id
+
+  def set_unique_id
+    return if unique_id
+
+    self.unique_id = SecureRandom.uuid
+  end
 
   def set_preferred_organization
     ActsAsTenant.without_tenant do

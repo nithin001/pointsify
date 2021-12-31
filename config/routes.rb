@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   end
 
   constraints subdomain: 'customer' do
+    devise_for :customers
     root to: 'customer#index', as: 'customer_root'
   end
 
