@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html id="app" class="antialiased">
   <%= render "shared/head" %>
-
-  <body class="min-h-screen pb-12 pt-6 font-sans font-normal leading-normal text-gray-800 bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400">
+  <body class="leading-normal tracking-normal text-white text-gray-800 bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400">
     <%= render "shared/flash_notice" %>
-
-    <main class="px-4 lg:px-10">
-      <%= content_for?(:content) ? yield(:content) : yield %>
-    </main>
+    <%= content_for?(:content) ? yield(:content) : yield %>
   </body>
 </html>

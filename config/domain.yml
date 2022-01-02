@@ -1,0 +1,8 @@
+# config/domain.yml
+production:
+  kiosk: 'https://kiosk.pointsify.com'
+  customer: 'https://customer.pointsify.com'
+
+development:
+  kiosk: 'http://kiosk.localhost.com:3000'
+  customer: 'http://customer.localhost.com:3000'
