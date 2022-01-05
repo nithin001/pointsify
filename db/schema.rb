@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_31_055318) do
+ActiveRecord::Schema.define(version: 2022_01_05_041109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "auth_flows", force: :cascade do |t|
+    t.string "flow_id"
+    t.string "phone"
+    t.string "otp"
+    t.integer "status", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "bills", force: :cascade do |t|
     t.integer "amount"
@@ -28,7 +37,8 @@ ActiveRecord::Schema.define(version: 2021_12_31_055318) do
     t.string "phone", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.datetime "remember_created_at"
-    t.boolean "guest", default: false
+    t.integer "failed_attempts", default: 0, null: false
+    t.datetime "locked_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["phone"], name: "index_customers_on_phone", unique: true

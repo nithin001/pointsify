@@ -61,3 +61,5 @@ gem 'sidekiq', '~> 6.1', '>= 6.1.2'
 gem 'cancancan'
 gem 'react-rails'
 gem 'devise-guests'
+gem 'wicked'
+gem "recaptcha"

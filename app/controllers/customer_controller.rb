@@ -1,7 +1,5 @@
 class CustomerController < CustomerApplicationController
   def index
-    p current_or_guest_customer
-    @organization = org
   end
 
   private

@@ -21,6 +21,10 @@
 
     <div class="input-group">
       <%= f.submit "Log in", class: "btn btn-default" %>
+      <div class="flex flex-wrap">
+        <%= link_to "Reset password with OTP", new_session_path(resource_name), class: "block py-2 text-gray-700 underline hover:no-underline" %>
+      </div>
+
     </div>
 
   <% end %>

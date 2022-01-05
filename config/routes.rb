@@ -21,7 +21,14 @@ Rails.application.routes.draw do
   end
 
   constraints subdomain: 'customer' do
-    devise_for :customers
+    devise_for :customers, controllers: {
+      registrations: 'customers/registrations'
+    }
+
+    namespace :customers do
+      resources :sign_up_flow
+    end
+
     root to: 'customer#index', as: 'customer_root'
   end
 
