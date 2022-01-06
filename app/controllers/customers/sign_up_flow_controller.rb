@@ -35,6 +35,10 @@ class Customers::SignUpFlowController < ApplicationController
     when :verify_otp
       @auth_flow.assign_attributes(customer_params)
       @auth_flow.assign_attributes(status: AuthFlow.statuses[:otp_verification])
+
+      unless @auth_flow.valid?
+        @auth_flow.increment!(:attempts, 1)
+      end
     end
 
     render_wizard(@auth_flow)
