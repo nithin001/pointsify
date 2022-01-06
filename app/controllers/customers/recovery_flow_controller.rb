@@ -1,16 +1,16 @@
-class Customers::SignUpFlowController < ApplicationController
-  layout 'customer_application'
+class Customers::RecoveryFlowController < ApplicationController
   include Wicked::Wizard
-
   steps :mobile_input, :verify_otp
 
+  layout 'customer_application'
+
   def show
-    session[:sign_up_flow_id] ||= SecureRandom.uuid
+    session[:recovery_flow_id] ||= SecureRandom.uuid
     if params[:reset].present?
-      session[:sign_up_flow_id] = SecureRandom.uuid
+      session[:recovery_flow_id] = SecureRandom.uuid
     end
 
-    @auth_flow = AuthFlow.where(flow_id: session[:sign_up_flow_id]).first_or_create!
+    @auth_flow = AuthFlow.where(flow_id: session[:recovery_flow_id]).first_or_create!
     if step == :mobile_input && !@auth_flow.unverified?
       skip_step
     end
@@ -28,7 +28,7 @@ class Customers::SignUpFlowController < ApplicationController
   end
 
   def update
-    @auth_flow = AuthFlow.find_by(flow_id: session[:sign_up_flow_id])
+    @auth_flow = AuthFlow.find_by(flow_id: session[:recovery_flow_id])
 
     case step
     when :mobile_input
@@ -50,12 +50,21 @@ class Customers::SignUpFlowController < ApplicationController
   end
 
   def finish_wizard_path
-    new_customer_registration_path
+    @auth_flow = AuthFlow.find_by(flow_id: session[:recovery_flow_id])
+    customer = Customer.find_by_phone(@auth_flow.phone)
+    p customer
+    p @auth_flow
+    unless customer
+      return customers_sign_up_flow_path(:mobile_input)
+    end
+
+    token = customer.send(:set_reset_password_token)
+    edit_customer_password_path(reset_password_token: token)
   end
 
   private
 
   def customer_params
-    params.require(:auth_flow).permit(:phone, :current_otp).merge(flow: 'sign_up')
+    params.require(:auth_flow).permit(:phone, :current_otp).merge(flow: 'recover')
   end
 end

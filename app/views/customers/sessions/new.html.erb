@@ -12,26 +12,18 @@
       <%= f.password_field :password, autocomplete: "current-password", class: "input" %>
     </div>
 
-    <div class="mb-6 input-checkbox">
-      <% if devise_mapping.rememberable? -%>
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me, class:"label" %>
-      <% end -%>
-    </div>
-
     <div class="input-group">
       <%= f.submit "Log in", class: "btn btn-default" %>
-      <div class="flex flex-wrap">
-        <%= link_to "Reset password with OTP", new_session_path(resource_name), class: "block py-2 text-gray-700 underline hover:no-underline" %>
-      </div>
-
     </div>
-
   <% end %>
 
   <hr class="mt-6 border" />
 
-  <%= render "devise/shared/links" %>
+  <div class="flex flex-wrap flex-row items-center justify-start">
+    <%= link_to "Sign up", new_registration_path('customer'), class: "block py-2 text-gray-700 underline hover:no-underline" %>
+    |
+    <%= link_to "Forgot password", customers_recovery_flow_path(:mobile_input), class: "block py-2 text-gray-700 underline hover:no-underline" %>
+  </div>
 <% end %>
 
 <%= render "devise/shared/form_wrap" %>

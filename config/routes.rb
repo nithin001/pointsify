@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
     namespace :customers do
       resources :sign_up_flow
+      resources :recovery_flow
     end
 
     root to: 'customer#index', as: 'customer_root'

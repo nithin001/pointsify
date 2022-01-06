@@ -6,7 +6,7 @@ class Customers::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-    @auth_flow = AuthFlow.find_by(flow_id: session[:flow_id])
+    @auth_flow = AuthFlow.find_by(flow_id: session[:sign_up_flow_id])
     unless @auth_flow && @auth_flow.otp_verification?
       redirect_to customers_sign_up_flow_path(:mobile_input)
       return
@@ -18,7 +18,6 @@ class Customers::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
-    p sign_up_params
   end
 
   # GET /resource/edit
@@ -61,13 +60,13 @@ class Customers::RegistrationsController < Devise::RegistrationsController
   #
 
   def sign_up_params
-    @auth_flow = AuthFlow.find_by(flow_id: session[:flow_id])
+    @auth_flow = AuthFlow.find_by(flow_id: session[:sign_up_flow_id])
 
     params.require(:customer).permit(:password, :password_confirmation).merge(phone: @auth_flow&.phone)
   end
 
   def after_sign_up_path_for(resource)
-    AuthFlow.find_by(flow_id: session[:flow_id]).destroy!
+    AuthFlow.find_by(flow_id: session[:sign_up_flow_id]).destroy!
 
     super(resource)
   end
