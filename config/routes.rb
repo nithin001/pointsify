@@ -22,7 +22,8 @@ Rails.application.routes.draw do
 
   constraints subdomain: 'customer' do
     devise_for :customers, controllers: {
-      registrations: 'customers/registrations'
+      registrations: 'customers/registrations',
+      passwords: 'customers/passwords'
     }
 
     namespace :customers do
