@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-  ALL_DEVISE_FIELDS = %i[email name phone password password_confirmation remember_me timezone]
-  LOCKED_DOWN_DEVISE_FIELDS = %i[password name password_confirmation remember_me timezone]
+  ALL_DEVISE_FIELDS = %i[email name phone password password_confirmation remember_me]
+  LOCKED_DOWN_DEVISE_FIELDS = %i[password name password_confirmation remember_me]
   SIGN_IN_FIELDS = %i[email phone password remember_me]
 
   protected

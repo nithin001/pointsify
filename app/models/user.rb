@@ -5,8 +5,7 @@ class User < ApplicationRecord
 
   belongs_to :preferred_organization, class_name: 'Organization', optional: true
   has_many :owned_organizations, class_name: 'Organization', foreign_key: 'owner_id'
-  validates_presence_of :timezone
-  validates :timezone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name), message: '%{value} is not valid' }, allow_blank: true
+  validates_presence_of :name
 
   def set_preferred_organization(organization)
     update(preferred_organization: organization)

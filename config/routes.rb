@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   end
 
   constraints subdomain: 'kiosk' do
-    devise_for :users
+    devise_for :users, controllers: {
+      passwords: 'users/passwords'
+    }
     root to: 'kiosk#index', as: 'kiosk_root'
     get '/menu', to: 'menu#index', as: 'menu'
 

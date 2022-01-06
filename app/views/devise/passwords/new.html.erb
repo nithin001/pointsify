@@ -10,6 +10,9 @@
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input" %>
     </div>
 
+    <%= recaptcha_tags %>
+    <br />
+
     <div class="input-group">
       <%= f.submit "Send reset instructions", class: "btn btn-default" %>
     </div>

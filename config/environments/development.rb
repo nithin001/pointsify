@@ -75,7 +75,8 @@ Rails.application.configure do
   config.hosts << "customer.localhost.com"
 
   # Don't send anything, log messages into Rails logger
-  config.textris_delivery_method = :log
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true

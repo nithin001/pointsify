@@ -7,17 +7,12 @@
 
     <div class="input-group">
       <%= f.label :name, class:"label" %>
-      <%= f.text_field :name, class:"input" %>
+      <%= f.text_field :name, class:"input", autocomplete: "name" %>
     </div>
 
     <div class="input-group">
       <%= f.label :email, class:"label" %>
       <%= f.email_field :email, autocomplete: "email", class:"input" %>
-    </div>
-
-    <div class="input-group">
-      <%= f.label :timezone, class:"label" %>
-      <%= f.collection_select :timezone, ActiveSupport::TimeZone.all, :name, :to_s, { include_blank: 'Choose a Time Zone'} , {class: 'input' } %>
     </div>
 
     <div class="input-group">
