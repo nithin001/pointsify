@@ -9,7 +9,8 @@ Rails.application.routes.draw do
     devise_for :users, controllers: {
       passwords: 'users/passwords'
     }
-    root to: 'kiosk#index', as: 'kiosk_root'
+    root to: 'kiosk_home#index', as: 'kiosk_root'
+    get '/kiosk', to: 'kiosk#index'
     get '/menu', to: 'menu#index', as: 'menu'
 
     resources :organizations do

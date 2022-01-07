@@ -1,5 +1,5 @@
 class AuthFlow < ActiveRecord::Base
-  validate :is_verified, :is_valid_otp, :max_otp_attempts, :customer_account
+  validate :mobile_number, :is_verified, :is_valid_otp, :max_otp_attempts, :customer_account
 
   enum status: [:unverified, :captcha_verification, :otp_verification]
 
@@ -7,9 +7,17 @@ class AuthFlow < ActiveRecord::Base
 
   def customer_account
     return unless captcha_verification?
+    return unless phone.present?
     return validates_absence_of_customer if flow == 'sign_up'
 
     validate_presence_of_customer
+  end
+
+  def mobile_number
+    return if unverified?
+    return if phone.present?
+
+    errors.add(:phone, 'is required.')
   end
 
   def validate_presence_of_customer
