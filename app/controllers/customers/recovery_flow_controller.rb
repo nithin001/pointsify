@@ -52,13 +52,12 @@ class Customers::RecoveryFlowController < ApplicationController
   def finish_wizard_path
     @auth_flow = AuthFlow.find_by(flow_id: session[:recovery_flow_id])
     customer = Customer.find_by_phone(@auth_flow.phone)
-    p customer
-    p @auth_flow
     unless customer
       return customers_sign_up_flow_path(:mobile_input)
     end
 
     token = customer.send(:set_reset_password_token)
+    @auth_flow.destroy!
     edit_customer_password_path(reset_password_token: token)
   end
 

@@ -65,8 +65,10 @@ class Customers::RegistrationsController < Devise::RegistrationsController
     params.require(:customer).permit(:password, :password_confirmation).merge(phone: @auth_flow&.phone)
   end
 
+
   def after_sign_up_path_for(resource)
-    AuthFlow.find_by(flow_id: session[:sign_up_flow_id]).destroy!
+    @auth_flow = AuthFlow.find_by(flow_id: session[:sign_up_flow_id])
+    @auth_flow.destroy!
 
     super(resource)
   end
