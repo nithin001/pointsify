@@ -21,9 +21,9 @@ const getData = (row) => {
     if(type==='Bill') {
         return  <span className="text-right text-green-600">+{row.amount}</span>
     } else if(type === 'Reward') {
-        return <span className="text-right text-green-600">+{row.points}</span>
+        return <span className="text-right text-green-600">+{row.amount}</span>
     } else {
-        return <span className="text-right text-red-600">-{row.points}</span>
+        return <span className="text-right text-red-600">-{row.amount}</span>
     }
 }
 

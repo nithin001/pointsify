@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
     resources :stores, except: [:index, :destroy]
     resources :bills
+    resources :transactions, only: [:show, :index]
     resources :rewards, only: [:index]
     resources :redemptions
   end

@@ -64,3 +64,4 @@ gem 'react-rails'
 gem 'devise-guests'
 gem 'wicked'
 gem "recaptcha"
+gem 'money'

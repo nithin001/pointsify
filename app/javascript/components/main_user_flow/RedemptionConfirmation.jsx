@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import {AxiosInstance} from "../common/axios";
 
 function RedemptionConfirmation({screen, setScreen, number, redeemPoints}) {
@@ -10,8 +9,8 @@ function RedemptionConfirmation({screen, setScreen, number, redeemPoints}) {
     const redeemPointsApi = () => {
         AxiosInstance().post(`/redemptions.json`, {
             phone_number: number,
-            points: redeemPoints
-        }).then(_ => {
+            amount: redeemPoints
+        }).then(response => {
             setScreen('customerDetails');
         })
     }

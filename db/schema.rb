@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_11_133600) do
+ActiveRecord::Schema.define(version: 2022_01_11_140917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,15 +23,6 @@ ActiveRecord::Schema.define(version: 2022_01_11_133600) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "attempts", default: 0
-  end
-
-  create_table "bills", force: :cascade do |t|
-    t.integer "amount"
-    t.string "phone_number"
-    t.bigint "store_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["store_id"], name: "index_bills_on_store_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -67,24 +58,6 @@ ActiveRecord::Schema.define(version: 2022_01_11_133600) do
     t.index ["user_id"], name: "index_known_stores_on_user_id"
   end
 
-  create_table "redemptions", force: :cascade do |t|
-    t.integer "points"
-    t.string "phone_number"
-    t.bigint "store_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["store_id"], name: "index_redemptions_on_store_id"
-  end
-
-  create_table "rewards", force: :cascade do |t|
-    t.integer "points"
-    t.string "phone_number"
-    t.bigint "store_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["store_id"], name: "index_rewards_on_store_id"
-  end
-
   create_table "stores", force: :cascade do |t|
     t.string "name"
     t.integer "owner_id"
@@ -92,6 +65,16 @@ ActiveRecord::Schema.define(version: 2022_01_11_133600) do
     t.string "unique_id"
     t.boolean "approved", default: false
     t.string "contact_number"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.integer "amount", null: false
+    t.integer "store_id", null: false
+    t.string "type", default: "Bill", null: false
+    t.string "phone_number", null: false
+    t.bigint "parent_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

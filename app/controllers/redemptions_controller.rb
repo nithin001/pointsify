@@ -71,6 +71,6 @@ class RedemptionsController < KioskApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def redemption_params
-    params.fetch(:redemption).permit(:phone_number, :points).merge(store: current_user.owned_store)
+    params.fetch(:redemption).permit(:phone_number, :amount).merge(store: current_user.owned_store)
   end
 end

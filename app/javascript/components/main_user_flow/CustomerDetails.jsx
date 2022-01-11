@@ -5,51 +5,42 @@ import Transactions from "./Transactions";
 import moment from "moment";
 
 function CustomerDetails({screen, setScreen, number, setMaxPoints}) {
-    const billsApi = useCallback(()=>{
+    const transactionsApi = useCallback(()=>{
         if(screen==='customerDetails') {
-            return AxiosInstance().get(`/bills.json?number=${number}`)
+            return AxiosInstance().get(`/transactions.json?number=${number}`)
         }
         return Promise.resolve({data: []})
     },[screen, number]);
 
-    const redemptionsApi = useCallback(()=>{
-        if(screen==='customerDetails') {
-            return AxiosInstance().get(`/redemptions.json?number=${number}`)
-        }
-        return Promise.resolve({data: []})
-    },[screen, number]);
 
-    const rewardsApi = useCallback(()=>{
-        if(screen==='customerDetails') {
-            return AxiosInstance().get(`/rewards.json?number=${number}`)
-        }
-        return Promise.resolve({data: []})
-    },[screen, number]);
-
-    const [billsLoaded, billsError, bills] = useApi(billsApi);
-    const [redemptionsLoaded, redemptionsError, redemptions] = useApi(redemptionsApi);
-    const [rewardsLoaded, rewardsError, rewards] = useApi(rewardsApi);
-
+    const [transactionsLoaded, transactionsError, transactions] = useApi(transactionsApi);
 
     if(screen!== 'customerDetails') {
         return null;
     }
 
-    if(!billsLoaded || !redemptionsLoaded || !rewardsLoaded) {
+    if(!transactionsLoaded) {
         return null;
     }
 
-    const totalRewards = rewards.reduce((previous, current) => {
-        return previous + current.points;
+    const totalRewards = transactions.reduce((previous, current) => {
+        if(current.type !== 'Reward') {
+            return previous;
+        }
+
+        return previous + current.amount;
     },0)
 
-    const totalRedemptions = redemptions.reduce((previous, current) => {
-        return previous + current.points;
+    const totalRedemptions = transactions.reduce((previous, current) => {
+        if(current.type !== 'Redemption') {
+            return previous;
+        }
+
+        return previous + current.amount;
     },0)
 
-    const rows = redemptions.concat(bills).concat(rewards)
-    rows.sort((a,b)=>moment.utc(b.created_at).diff(moment.utc(a.created_at)));
-
+    transactions.sort((a,b)=>moment.utc(b.created_at).diff(moment.utc(a.created_at)));
+    const visitCount = transactions.filter(transaction=>transaction.type==='Bill').length;
     const availablePoints = totalRewards - totalRedemptions;
 
     return (
@@ -79,14 +70,14 @@ function CustomerDetails({screen, setScreen, number, setMaxPoints}) {
                     className="bg-white border-dashed rounded p-6 m-1 text-gray-600">
                     <div className="flex flex-col items-center text-center">
                         <div className="flex-1">
-                            <h3 className="text-3xl">{bills.length}</h3>
+                            <h3 className="text-3xl">{visitCount}</h3>
                             <h5 className="text-gray-500">Visits</h5>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-            <Transactions rows={rows}/>
+            <Transactions rows={transactions}/>
         </div>
     );
 }
