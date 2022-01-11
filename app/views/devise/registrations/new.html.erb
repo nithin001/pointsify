@@ -30,6 +30,9 @@
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input" %>
     </div>
 
+    <%= recaptcha_tags %>
+    <br />
+
     <div class="input-group">
       <%= f.submit "Sign up", class: "btn btn-default" %>
     </div>

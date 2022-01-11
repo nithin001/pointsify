@@ -66,11 +66,11 @@ class BillsController < KioskApplicationController
   end
 
   def all_bills
-    current_user.preferred_organization.bills
+    current_user.owned_store.bills
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def bill_params
-    params.fetch(:bill).permit(:phone_number, :amount).merge(organization: current_user.preferred_organization)
+    params.fetch(:bill).permit(:phone_number, :amount).merge(store: current_user.owned_store)
   end
 end

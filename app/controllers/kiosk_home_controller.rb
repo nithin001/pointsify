@@ -1,7 +1,7 @@
 class KioskHomeController < KioskApplicationController
   def index
-    unless current_user.preferred_organization.present?
-      redirect_to new_organization_path
+    unless current_user.owned_store
+      redirect_to new_store_path
     end
   end
 end

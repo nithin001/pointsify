@@ -1,2 +1,10 @@
 // require_tree .
 // require_self
+
+.main-content {
+  min-height: calc(100vh - 280px);
+}
+
+.kiosk-main-content {
+  min-height: calc(100vh - 64px);
+}

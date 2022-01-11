@@ -29,9 +29,9 @@
               <% end %>
             <% end %>
 
-            <% if current_user&.preferred_organization %>
-              <% if current_ability.can?(:manage, current_user.preferred_organization) %>
-                <%= link_to "Manage Organization", edit_organization_path(current_user.preferred_organization), class: 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
+            <% if current_user&.preferred_store %>
+              <% if current_ability.can?(:manage, current_user.owned_store) %>
+                <%= link_to "Manage Store", edit_store_path(current_user.owned_store), class: 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
               <% end %>
             <% end %>
           </div>
@@ -58,8 +58,8 @@
           -->
           <div id="user-menu" class="hidden origin-top-right absolute right-0 mt-5 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
             <!-- Active: "bg-gray-100", Not Active: "" -->
-            <%= link_to "Create Organization", new_organization_path, class: 'block px-4 py-2 text-sm text-gray-700' %>
-            <%= react_component("change_organization", organizations: current_user.owned_organizations, preferred_organization: current_user.preferred_organization, class_name: 'block px-4 py-2 text-sm text-gray-700') %>
+            <%= link_to "Create Store", new_store_path, class: 'block px-4 py-2 text-sm text-gray-700' %>
+            <%= react_component("change_store", stores: current_user.owned_stores, preferred_store: current_user.owned_store, class_name: 'block px-4 py-2 text-sm text-gray-700') %>
             <%= link_to "Your Profile", edit_user_registration_path, class: "block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-0" %>
             <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"block px-4 py-2 text-sm text-gray-700", role: "menuitem", tabindex: "-1", id: "user-menu-item-0" %>
           </div>
@@ -70,15 +70,15 @@
 
   <!-- Mobile menu, show/hide based on menu state. -->
   <div class="hidden" id="mobile-menu">
-    <% if current_user&.preferred_organization %>
-      <% if current_ability.can?(:manage, current_user.preferred_organization) %>
-        <%= link_to "Manage Organization", edit_organization_path(current_user.preferred_organization), class: 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block' %>
+    <% if current_user&.preferred_store %>
+      <% if current_ability.can?(:manage, current_user.owned_store) %>
+        <%= link_to "Manage Store", edit_store_path(current_user.owned_store), class: 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block' %>
       <% end %>
     <% end %>
 
     <!-- Active: "bg-gray-100", Not Active: "" -->
-    <%= link_to "Create Organization", new_organization_path, class: 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block' %>
-    <%= react_component("change_organization", organizations: current_user.owned_organizations, preferred_organization: current_user.preferred_organization, class_name: 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block') %>
+    <%= link_to "Create Store", new_store_path, class: 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block' %>
+    <%= react_component("change_store", stores: current_user.owned_stores, preferred_store: current_user.owned_store, class_name: 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block') %>
     <%= link_to "Your Profile", edit_user_registration_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block", role: "menuitem", tabindex: "-1", id: "user-menu-item-0" %>
     <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium block", role: "menuitem", tabindex: "-1", id: "user-menu-item-0" %>
     <br />

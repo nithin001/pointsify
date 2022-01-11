@@ -15,6 +15,6 @@ class RewardsController < KioskApplicationController
   end
 
   def all_rewards
-    current_user.preferred_organization.rewards
+    current_user.owned_store.rewards
   end
 end

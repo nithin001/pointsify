@@ -1,14 +1,16 @@
 <% flash.each do |type, message| %>
   <% if type == "alert" %>
-    <div class="w-full max-w-md mx-auto my-8">
+    <div class="w-full max-w-3xl mx-auto mt-2 mb-4">
       <div class="notice bg-transparent border-2 border-red-300 rounded">
-        <div class="container px-2 py-4 mx-auto font-sans font-medium text-center text-white"><%= message %></div>
+        <div class="container p-4 mx-auto font-sans font-medium text-center text-white"><%= message %></div>
       </div>
     </div>
   <% end %>
   <% if type == "notice" %>
-    <div class="notice bg-transparent border-2 border-green-300 p-1 m-4 rounded">
-      <div class="container px-2 py-4 mx-auto font-sans font-medium text-center text-white"><%= message %></div>
+    <div class="w-full max-w-3xl mx-auto mt-2 mb-4">
+      <div class="notice bg-transparent border-2 border-green-300 rounded">
+        <div class="container p-4 mx-auto font-sans font-medium text-center text-white"><%= message %></div>
+      </div>
     </div>
   <% end %>
 <% end %>

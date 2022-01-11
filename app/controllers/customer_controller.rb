@@ -4,8 +4,8 @@ class CustomerController < CustomerApplicationController
 
   private
 
-  def org
+  def store
     return unless params[:org_id]
-    Organization.where(unique_id: params[:org_id]).first
+    Store.where(unique_id: params[:org_id]).first
   end
 end

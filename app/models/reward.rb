@@ -1,3 +1,3 @@
 class Reward < ApplicationRecord
-  acts_as_tenant :organization
+  belongs_to :store
 end

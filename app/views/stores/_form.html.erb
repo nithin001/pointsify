@@ -1,0 +1,32 @@
+<%= form_with(model: store, local: true, url: store.new_record? ? stores_path : store_path) do |form| %>
+  <% if store.errors.any? %>
+    <div class="bg-red-100 border-l-4 border-red-500 mb-4 p-4 text-red-700" role="alert">
+      <p class="font-bold">Oops!</p>
+      <p><%= pluralize(store.errors.count, "error") %> prohibited this store from being saved:</p>
+      <% store.errors.full_messages.each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="input-group">
+    <%= form.label :name, "Store Name" %>
+    <%= form.text_field :name, class: 'input', placeholder: 'Store name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :contact_number %>
+    <%= form.text_field :contact_number, class: 'input', placeholder: 'Contact Number' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :discount_percentage, "Discount Percentage" %>
+    <%= form.text_field :discount_percentage, type: 'number', class: 'input', placeholder: 'Discount Percentage' %>
+  </div>
+
+
+
+  <div class="input-group">
+    <%= form.submit class: 'btn btn-default' %>
+  </div>
+<% end %>

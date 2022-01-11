@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_06_120014) do
+ActiveRecord::Schema.define(version: 2022_01_11_133600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,10 +28,10 @@ ActiveRecord::Schema.define(version: 2022_01_06_120014) do
   create_table "bills", force: :cascade do |t|
     t.integer "amount"
     t.string "phone_number"
-    t.bigint "organization_id"
+    t.bigint "store_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_bills_on_organization_id"
+    t.index ["store_id"], name: "index_bills_on_store_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -58,38 +58,40 @@ ActiveRecord::Schema.define(version: 2022_01_06_120014) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
-  create_table "known_organizations", force: :cascade do |t|
+  create_table "known_stores", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "organization_id"
+    t.bigint "store_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_known_organizations_on_organization_id"
-    t.index ["user_id"], name: "index_known_organizations_on_user_id"
-  end
-
-  create_table "organizations", force: :cascade do |t|
-    t.string "name"
-    t.integer "owner_id"
-    t.float "discount_percentage", default: 1.0
-    t.string "unique_id"
+    t.index ["store_id"], name: "index_known_stores_on_store_id"
+    t.index ["user_id"], name: "index_known_stores_on_user_id"
   end
 
   create_table "redemptions", force: :cascade do |t|
     t.integer "points"
     t.string "phone_number"
-    t.bigint "organization_id"
+    t.bigint "store_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_redemptions_on_organization_id"
+    t.index ["store_id"], name: "index_redemptions_on_store_id"
   end
 
   create_table "rewards", force: :cascade do |t|
     t.integer "points"
     t.string "phone_number"
-    t.bigint "organization_id"
+    t.bigint "store_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_rewards_on_organization_id"
+    t.index ["store_id"], name: "index_rewards_on_store_id"
+  end
+
+  create_table "stores", force: :cascade do |t|
+    t.string "name"
+    t.integer "owner_id"
+    t.float "discount_percentage", default: 1.0
+    t.string "unique_id"
+    t.boolean "approved", default: false
+    t.string "contact_number"
   end
 
   create_table "users", force: :cascade do |t|
@@ -101,10 +103,9 @@ ActiveRecord::Schema.define(version: 2022_01_06_120014) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "preferred_organization_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "organizations", "users", column: "owner_id"
+  add_foreign_key "stores", "users", column: "owner_id"
 end

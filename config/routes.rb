@@ -7,17 +7,14 @@ Rails.application.routes.draw do
 
   constraints subdomain: 'kiosk' do
     devise_for :users, controllers: {
-      passwords: 'users/passwords'
+      passwords: 'users/passwords',
+      registrations: 'users/registrations'
     }
     root to: 'kiosk_home#index', as: 'kiosk_root'
     get '/kiosk', to: 'kiosk#index'
     get '/menu', to: 'menu#index', as: 'menu'
 
-    resources :organizations do
-      member do
-        get :set_as_preferred
-      end
-    end
+    resources :stores, except: [:index, :destroy]
     resources :bills
     resources :rewards, only: [:index]
     resources :redemptions

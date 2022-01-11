@@ -13,7 +13,7 @@ const customStyles = {
 };
 
 // eslint-disable-next-line max-len,react/prop-types
-function Index({ organizations, preferred_organization: preferredOrg, class_name: className }) {
+function Index({ stores, preferred_store: preferredOrg, class_name: className }) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
@@ -23,26 +23,26 @@ function Index({ organizations, preferred_organization: preferredOrg, class_name
   function closeModal() {
     setIsOpen(false);
   }
-  if(organizations.length === 0) {
+  if(stores.length === 0) {
     return null;
   }
 
   return (
     <div>
-      <button className={className} onClick={openModal}>Change Organization</button>
+      <button className={className} onClick={openModal}>Change Store</button>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <h2>Change organization (currently using {preferredOrg.name})</h2>
-        {organizations.map((org) => {
-          if (org.id === preferredOrg.id) {
+        <h2>Change store (currently using {preferredOrg.name})</h2>
+        {stores.map((store) => {
+          if (store.id === preferredOrg.id) {
             return null;
           }
 
-          return <a href={`organizations/${org.id}/set_as_preferred`}>{org.name}</a>;
+          return <a href={`stores/${store.id}/set_as_preferred`}>{store.name}</a>;
         })}
         <br/><br/>
         <button onClick={closeModal}>close</button>
