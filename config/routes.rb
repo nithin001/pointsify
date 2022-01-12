@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :transactions, only: [:show, :index]
     resources :rewards, only: [:index]
     resources :redemptions
+    resources :redemption_flows
   end
 
   constraints subdomain: 'customer' do

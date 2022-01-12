@@ -2,19 +2,19 @@ import React from 'react';
 import axios from 'axios';
 import {AxiosInstance} from "../common/axios";
 
-function BillConfirmation({screen, setScreen, number, billAmount}) {
+function BillConfirmation({screen, setScreen, number, billAmount, setRedemptionFlowId}) {
     if(screen!== 'billConfirmation') {
         return null;
     }
 
-    const addBill = () => {
-        AxiosInstance().post(`/bills.json`, {
+    const createAndResumeRedemptionFlow = () => {
+        AxiosInstance().post(`/redemption_flows.json`, {
             phone_number: number,
-            amount: billAmount
-        }).then(_ => {
-            setScreen('customerDetails');
+            bill_amount: billAmount
+        }).then(response => {
+            setRedemptionFlowId(response.data.id);
+            setScreen('resumeRedemptionFlow');
         })
-
     }
 
     const formattedAmount = billAmount ? parseInt(billAmount).toLocaleString('en-IN', {
@@ -37,7 +37,7 @@ function BillConfirmation({screen, setScreen, number, billAmount}) {
             <div className="w-full flex mt-2 p-1">
                 <button onClick={()=>{setScreen('addBillAmount')}} className="border rounded w-1/2 p-2 mr-1 bg-transparent text-white text-center shadow text-2xl">
                     No</button>
-                <button onClick={addBill} className="border rounded w-1/2 p-2 ml-1 bg-transparent text-white text-center shadow text-2xl">
+                <button onClick={createAndResumeRedemptionFlow} className="border rounded w-1/2 p-2 ml-1 bg-transparent text-white text-center shadow text-2xl">
                     Yes</button>
             </div>
         </>

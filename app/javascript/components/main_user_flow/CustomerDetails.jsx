@@ -3,8 +3,9 @@ import {AxiosInstance} from "../common/axios";
 import useApi from "../common/useApi";
 import Transactions from "./Transactions";
 import moment from "moment";
+import PendingTransactions from "./PendingTransactions";
 
-function CustomerDetails({screen, setScreen, number, setMaxPoints}) {
+function CustomerDetails({screen, setScreen, number, setMaxPoints, setRedemptionFlowId}){
     const transactionsApi = useCallback(()=>{
         if(screen==='customerDetails') {
             return AxiosInstance().get(`/transactions.json?number=${number}`)
@@ -13,13 +14,21 @@ function CustomerDetails({screen, setScreen, number, setMaxPoints}) {
     },[screen, number]);
 
 
+    const redemptionsFlowApi = useCallback(()=>{
+        if(screen==='customerDetails') {
+            return AxiosInstance().get(`/redemption_flows.json?number=${number}`)
+        }
+        return Promise.resolve({data: []})
+    },[screen, number]);
+
     const [transactionsLoaded, transactionsError, transactions] = useApi(transactionsApi);
+    const [redemptionFlowsLoaded, redemptionFlowsError, redemptionFlows] = useApi(redemptionsFlowApi);
 
     if(screen!== 'customerDetails') {
         return null;
     }
 
-    if(!transactionsLoaded) {
+    if(!transactionsLoaded || !redemptionFlowsLoaded) {
         return null;
     }
 
@@ -46,12 +55,8 @@ function CustomerDetails({screen, setScreen, number, setMaxPoints}) {
     return (
         <div className="font-sans">
             <div className="w-full flex mt-2 p-1">
-                <button onClick={()=>{setScreen('addBillAmount')}} className="border rounded w-1/2 p-2 mr-1 bg-transparent text-white text-center shadow text-2xl">
+                <button onClick={()=>{setScreen('addBillAmount')}} className="border rounded w-full p-2 mr-1 bg-transparent text-white text-center shadow text-2xl">
                     Add Bill Amount</button>
-                <button onClick={()=>{
-                    setMaxPoints(availablePoints);
-                    setScreen('redeemPoints')}} className="border rounded w-1/2 p-2 ml-1 bg-transparent text-white text-center shadow text-2xl">
-                    Redeem Points</button>
             </div>
         <div className="flex mt-2">
             <div className="w-1/2">
@@ -77,6 +82,7 @@ function CustomerDetails({screen, setScreen, number, setMaxPoints}) {
                 </div>
             </div>
         </div>
+            <PendingTransactions rows={redemptionFlows} setScreen={setScreen} setRedemptionFlowId={setRedemptionFlowId}/>
             <Transactions rows={transactions}/>
         </div>
     );

@@ -1,17 +1,17 @@
 import React from 'react';
 import {AxiosInstance} from "../common/axios";
 
-function RedemptionConfirmation({screen, setScreen, number, redeemPoints}) {
+function RedemptionConfirmation({screen, setScreen, redeemPoints, redemptionFlowId}) {
     if(screen!== 'redeemConfirmation') {
         return null;
     }
 
     const redeemPointsApi = () => {
-        AxiosInstance().post(`/redemptions.json`, {
-            phone_number: number,
-            amount: redeemPoints
+        AxiosInstance().patch(`/redemption_flows/${redemptionFlowId}.json`, {
+            redemption_flow:
+                { status: 1, redemption_amount: redeemPoints}
         }).then(response => {
-            setScreen('customerDetails');
+            setScreen('validateOtp');
         })
     }
 
@@ -30,7 +30,7 @@ function RedemptionConfirmation({screen, setScreen, number, redeemPoints}) {
                 <button onClick={()=>{setScreen('addBillAmount')}} className="border rounded w-1/2 p-2 mr-1 bg-transparent text-white text-center shadow text-2xl">
                     No</button>
                 <button onClick={redeemPointsApi} className="border rounded w-1/2 p-2 ml-1 bg-transparent text-white text-center shadow text-2xl">
-                    Yes</button>
+                    Yes, Get OTP</button>
             </div>
         </>
     );

@@ -9,6 +9,8 @@ import RedeemPoints from "./RedeemPoints";
 import NavBar from "./NavBar";
 import BillConfirmation from "./BillConfirmation";
 import RedemptionConfirmation from "./RedemptionConfirmation";
+import ValidateOtp from "./ValidateOtp";
+import ResumeRedemptionFlow from "./ResumeRedemptionFlow";
 
 function Index(props) {
     const [screen, setScreen] = useState('getNumber')
@@ -16,6 +18,7 @@ function Index(props) {
     const [billAmount, setBillAmount] = useState('');
     const [redeemPoints, setRedeemPoints] = useState('');
     const [maxPoints, setMaxPoints] = useState(0)
+    const [redemptionFlowId, setRedemptionFlowId] = useState(null);
 
     const selectNumber=(number)=>{
         setNumber(number);
@@ -28,16 +31,27 @@ function Index(props) {
         setBillAmount('');
         setRedeemPoints('');
         setScreen('getNumber')
+        setRedemptionFlowId(null);
+    }
+
+    const resetTillCustomerScreen=()=>{
+        setMaxPoints(0)
+        setBillAmount('');
+        setRedeemPoints('');
+        setRedemptionFlowId(null);
+        setScreen('customerDetails')
     }
 
     return (<div>
         <InputScreen screen={screen} selectNumber={selectNumber} defaultNumber={number} />
         <NavBar screen={screen} number={number} reset={reset} />
-        <CustomerDetails screen={screen} number={number} setScreen={setScreen} setMaxPoints={setMaxPoints}/>
+        <CustomerDetails screen={screen} number={number} setScreen={setScreen} setRedemptionFlowId={setRedemptionFlowId} setMaxPoints={setMaxPoints}/>
         <AddBillAmount screen={screen} setScreen={setScreen} setBillAmount={setBillAmount}/>
-        <BillConfirmation number={number} screen={screen} setScreen={setScreen} billAmount={billAmount} />
+        <BillConfirmation number={number} screen={screen} setScreen={setScreen} billAmount={billAmount} setRedemptionFlowId={setRedemptionFlowId}/>
+        <ResumeRedemptionFlow setScreen={setScreen} redemptionFlowId={redemptionFlowId} resetTillCustomerScreen={resetTillCustomerScreen} screen={screen} />
         <RedeemPoints maxPoints={maxPoints} screen={screen} setScreen={setScreen} setRedeemPoints={setRedeemPoints} />
-        <RedemptionConfirmation number={number} screen={screen} setScreen={setScreen} redeemPoints={redeemPoints}/>
+        <RedemptionConfirmation number={number} screen={screen} setScreen={setScreen} redeemPoints={redeemPoints} redemptionFlowId={redemptionFlowId} />
+        <ValidateOtp screen={screen} setScreen={setScreen} redemptionFlowId={redemptionFlowId} resetTillCustomerScreen={resetTillCustomerScreen} />
     </div>)
 
 }

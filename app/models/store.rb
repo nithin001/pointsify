@@ -3,6 +3,8 @@ class Store < ApplicationRecord
   validates_presence_of :name, :contact_number
   validates :name, length: { in: 6..30 }, allow_blank: true
   has_many :transactions, -> { order(created_at: :desc) }
+  has_many :redemption_flows, -> { order(created_at: :desc) }
+
   before_save :set_unique_id
 
   validates_uniqueness_of :owner_id, message: "Only one store per user"
