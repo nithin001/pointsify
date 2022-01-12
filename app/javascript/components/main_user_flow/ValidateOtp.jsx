@@ -34,7 +34,7 @@ function ValidateOtp({ screen, setScreen, resetTillCustomerScreen, redemptionFlo
                 { current_otp: number, status: 2}
            ,
         }).then(_ => {
-            setScreen('customerDetails');
+            setScreen('congratulations');
         }).catch((error)=>{
             setError(true);
         })

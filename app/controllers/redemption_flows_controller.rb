@@ -43,21 +43,22 @@ class RedemptionFlowsController < ApplicationController
       @redemption_flow.assign_attributes(redemption_flow_params)
       if @redemption_flow.save
         if @redemption_flow.redeem_points?
-          Bill.create!(store: @redemption_flow.store, phone_number: @redemption_flow.phone_number, amount: @redemption_flow.bill_amount)
-          Redemption.create!(store: @redemption_flow.store, phone_number: @redemption_flow.phone_number, amount: @redemption_flow.redemption_amount)
-          @redemption_flow.destroy!
+          Bill.create!(store: @redemption_flow.store, phone_number: @redemption_flow.phone_number, amount: @redemption_flow.bill_amount, parent: @redemption_flow)
+          Reward.create!(amount: ((@redemption_flow.bill_amount.to_i *@redemption_flow.store.discount_percentage)/100), phone_number: @redemption_flow.phone_number, store: @redemption_flow.store, parent: @redemption_flow)
+          Redemption.create!(store: @redemption_flow.store, phone_number: @redemption_flow.phone_number, amount: @redemption_flow.redemption_amount, parent: @redemption_flow)
         end
 
         if @redemption_flow.only_bill?
-          Bill.create!(store: @redemption_flow.store, phone_number: @redemption_flow.phone_number, amount: @redemption_flow.bill_amount)
-          @redemption_flow.destroy!
+          Bill.create!(store: @redemption_flow.store, phone_number: @redemption_flow.phone_number, amount: @redemption_flow.bill_amount, parent: @redemption_flow)
+          Reward.create!(amount: ((@redemption_flow.bill_amount.to_i *@redemption_flow.store.discount_percentage)/100), phone_number: @redemption_flow.phone_number, store: @redemption_flow.store, parent: @redemption_flow)
         end
 
         if @redemption_flow.get_otp? && @redemption_flow.redemption_amount && !@redemption_flow.otp
           @redemption_flow.update_attribute(:otp, '121212')
         end
 
-        format.json { head :no_content }
+        format.html { redirect_to bill_url(@bill), notice: "Bill was successfully updated." }
+        format.json { render :show, status: :ok, location: @redemption_flow }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @redemption_flow.errors, status: :unprocessable_entity }
@@ -84,7 +85,7 @@ class RedemptionFlowsController < ApplicationController
   end
 
   def all_redemption_flows
-    current_user.owned_store.redemption_flows
+    current_user.owned_store.redemption_flows.where(status: [0,1])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,12 +1,6 @@
 class Bill < Transaction
-  after_create :add_points
-
   attr_accessor :total_count
   validate :limited_functionality
-
-  def add_points
-    Reward.create!(amount: ((amount*store.discount_percentage)/100), phone_number: phone_number, store: store, parent: self)
-  end
 
   def limited_functionality
     return if store.approved

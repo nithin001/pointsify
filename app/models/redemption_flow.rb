@@ -1,6 +1,7 @@
 class RedemptionFlow < ActiveRecord::Base
   belongs_to :store
-  validates_presence_of :phone_number
+  validates_presence_of :phone_number, :store
+  has_many :transactions, foreign_key: 'parent_id'
   validate :is_valid_otp, :max_otp_attempts
 
   enum status: [:unverified, :get_otp, :redeem_points, :only_bill]

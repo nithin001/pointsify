@@ -11,6 +11,7 @@ import BillConfirmation from "./BillConfirmation";
 import RedemptionConfirmation from "./RedemptionConfirmation";
 import ValidateOtp from "./ValidateOtp";
 import ResumeRedemptionFlow from "./ResumeRedemptionFlow";
+import Congratulations from "./Congratulations";
 
 function Index(props) {
     const [screen, setScreen] = useState('getNumber')
@@ -18,7 +19,7 @@ function Index(props) {
     const [billAmount, setBillAmount] = useState('');
     const [redeemPoints, setRedeemPoints] = useState('');
     const [maxPoints, setMaxPoints] = useState(0)
-    const [redemptionFlowId, setRedemptionFlowId] = useState(null);
+    const [redemptionFlowId, setRedemptionFlowId] = useState('');
 
     const selectNumber=(number)=>{
         setNumber(number);
@@ -52,6 +53,7 @@ function Index(props) {
         <RedeemPoints maxPoints={maxPoints} screen={screen} setScreen={setScreen} setRedeemPoints={setRedeemPoints} />
         <RedemptionConfirmation number={number} screen={screen} setScreen={setScreen} redeemPoints={redeemPoints} redemptionFlowId={redemptionFlowId} />
         <ValidateOtp screen={screen} setScreen={setScreen} redemptionFlowId={redemptionFlowId} resetTillCustomerScreen={resetTillCustomerScreen} />
+        <Congratulations screen={screen} setScreen={setScreen} redemptionFlowId={redemptionFlowId} resetTillCustomerScreen={resetTillCustomerScreen}/>
     </div>)
 
 }

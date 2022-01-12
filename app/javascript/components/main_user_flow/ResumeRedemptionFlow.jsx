@@ -11,7 +11,7 @@ function ResumeRedemptionFlow({screen, setScreen, redemptionFlowId, resetTillCus
             redemption_flow:
                 { status: 3}
         }).then(_ => {
-            resetTillCustomerScreen();
+            setScreen('congratulations');
         })
     }
 
