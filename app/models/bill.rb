@@ -1,6 +1,7 @@
 class Bill < Transaction
   after_create :add_points
 
+  attr_accessor :total_count
   validate :limited_functionality
 
   def add_points
