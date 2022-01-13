@@ -1,21 +1,13 @@
 import React, {useCallback} from 'react';
 import {AxiosInstance} from "../common/axios";
 import useApi from "../common/useApi";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import TableBody from "@mui/material/TableBody";
-import moment from "moment";
-import TableContainer from "@mui/material/TableContainer";
 
-function Congratulations({ screen,setScreen, redemptionFlowId, resetTillCustomerScreen}) {
+function Congratulations({ screen, redemptionFlowId, resetTillCustomerScreen}) {
     const redemptionFlowApi = useCallback(()=>{
         if(screen==='congratulations') {
             return AxiosInstance().get(`/redemption_flows/${redemptionFlowId}.json`)
         }
-        return Promise.resolve({data: []})
+        return Promise.resolve({data: {}})
     },[screen, redemptionFlowId]);
 
     const [redemptionFlowLoaded, redemptionFlowError, redemptionFlow] = useApi(redemptionFlowApi);
@@ -24,17 +16,21 @@ function Congratulations({ screen,setScreen, redemptionFlowId, resetTillCustomer
         return null;
     }
 
-    if(!redemptionFlowLoaded) {
+    if(!redemptionFlowLoaded || redemptionFlow.status === undefined) {
         return null;
     }
 
-    if(redemptionFlow.status === 0 || redemptionFlow.status === 1) {
-        setScreen('resumeRedemptionFlow');
-        return null;
+    if(redemptionFlow.status === 'unverified' || redemptionFlow.status === 'get_otp') {
+        return (<div>
+            <h1 className="mx-auto text-white text-center text-3xl mt-4">This is a pending transaction!</h1>
+            <div className="flex p-1">
+                <button onClick={()=>{resetTillCustomerScreen();}} className="text-2xl w-full mt-4 border rounded p-2 bg-transparent text-white text-center shadow">Go Back</button>
+            </div>
+        </div>)
     }
 
     const billAmount = redemptionFlow.bill_amount ? parseInt(redemptionFlow.bill_amount) : 0;
-    const pointsRedeemed = redemptionFlow.status = 2 && redemptionFlow.redemption_amount ? parseInt(redemptionFlow.redemption_amount) : 0;
+    const pointsRedeemed = redemptionFlow.status === 'redeem_points' && redemptionFlow.redemption_amount ? parseInt(redemptionFlow.redemption_amount) : 0;
     const formattedAmount = billAmount.toLocaleString('en-IN', {
         maximumFractionDigits: 2,
         style: 'currency',
@@ -46,6 +42,8 @@ function Congratulations({ screen,setScreen, redemptionFlowId, resetTillCustomer
         currency: 'INR'
     });
 
+    const rewards = redemptionFlow.transactions.filter(transaction=>transaction.type === 'Reward')
+    const pointsAdded = rewards.length > 0 ? parseInt(rewards[0].amount) : 0;
     return (
         <div>
            <h1 className="mx-auto text-white text-center text-3xl mt-4">Congratulations!</h1>
@@ -82,6 +80,14 @@ function Congratulations({ screen,setScreen, redemptionFlowId, resetTillCustomer
                         </td>
                         <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500 text-right">
                             {formattedTotal}
+                        </td>
+                    </tr>
+                    <tr className="bg-gray-100">
+                        <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                            Points added for this bill
+                        </td>
+                        <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500 text-right">
+                            {pointsAdded}
                         </td>
                     </tr>
                 </tbody>
