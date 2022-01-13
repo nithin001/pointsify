@@ -8,6 +8,8 @@ class Customer < ApplicationRecord
 
   validates_uniqueness_of :phone
 
+  has_many :transactions, foreign_key: :phone_number, primary_key: :phone
+
   def email_required?
     false
   end

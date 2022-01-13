@@ -1,0 +1,33 @@
+<% if @transactions.length > 0 %>
+  <div class="grid grid-cols-12 gap-4">
+    <% @transactions.each.with_index do |transaction| %>
+      <div class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-3">
+        <div class="relative w-full h-52 bg-cover bg-center group rounded-lg overflow-hidden mt-4 shadow-lg transition duration-300 ease-in-out">
+          <div class="absolute inset-0 bg-black bg-opacity-50 transition duration-300 ease-in-out"></div>
+          <div class="relative w-full h-full px-4 sm:px-6 lg:px-4 flex items-center">
+            <div>
+              <div class="text-white text-lg flex space-x-2 items-center">
+                <p><%=transaction[:store].name %></p>
+              </div>
+              <h3 class="text-white text-3xl mt-2 font-bold">
+                <%=pluralize(transaction[:points], "Point") %>
+              </h3>
+              <h3 class="text-white text-lg mt-2 text-yellow-100 ">
+                visited <%=pluralize(transaction[:visits], "time") %>
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="w-full max-w-3xl mx-auto mt-2 mb-4">
+    <div class="notice bg-transparent border-2 border-yellow-300 rounded">
+      <div class="container p-4 mx-auto font-sans font-medium text-center text-white">
+        You have not accumulated any points in stores that support Pointsify.
+        If you think there has been a mistake, please contact the store that rewarded the points or <a class="underline" href="mailto:support@pointsify.com">customer care email</a>.
+      </div>
+    </div>
+  </div>
+<% end %>

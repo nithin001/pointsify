@@ -3,14 +3,22 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
-    return unless user
+  def initialize(user_or_customer)
+    return unless user_or_customer
 
-    can :manage, Store, owner_id: user.id
-    can :manage, Bill, store: { owner_id: user.id }
-    can :manage, Redemption, store: { owner_id: user.id }
-    can :manage, Reward, store: { owner_id: user.id }
-    can :manage, RedemptionFlow, store: { owner_id: user.id }
+    if user_or_customer.kind_of?(User)
+      user = user_or_customer
+      can :manage, Store, owner_id: user.id
+      can :manage, Bill, store: { owner_id: user.id }
+      can :manage, Redemption, store: { owner_id: user.id }
+      can :manage, Reward, store: { owner_id: user.id }
+      can :manage, RedemptionFlow, store: { owner_id: user.id }
+    else user_or_customer.kind_of?(Customer)
+      customer = user_or_customer
+
+      can :read, Transaction, phone_number: customer.phone
+    end
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

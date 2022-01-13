@@ -1,5 +1,5 @@
 <% content_for :devise_form do %>
-  <h2 class="pt-4 mb-8 text-4xl font-bold heading">Edit <%= resource_name.to_s.humanize %></h2>
+  <h2 class="pt-4 mb-8 text-4xl font-bold heading">Profile settings:</h2>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
 
@@ -28,19 +28,6 @@
       <%= f.submit "Update", class: "btn btn-default" %>
     </div>
   <% end %>
-
-  <hr class="mt-6 mb-3 border" />
-
-  <h3 class="mb-4 text-xl font-bold heading">Cancel my account</h3>
-
-  <div class="flex items-center justify-between">
-    <div class="flex-1">
-      <p class="py-4">Unhappy?</p>
-    </div>
-
-    <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-red" %>
-  </div>
-
 <% end %>
 
 <%= render 'devise/shared/form_wrap' %>

@@ -14,7 +14,7 @@
             <img src="<%=image_path('logo_dark.png') %>" class="h-8"/>
           </a>
         </div>
-        <% unless current_page?(kiosk_path) %>
+        <% if current_user.present? && !current_page?(kiosk_path) %>
           <a href="<%=kiosk_path %>" class="mr-4 font-bold rounded-full h-10 py-2 px-4 shadow opacity-75 bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 text-white">
             Kiosk
           </a>
